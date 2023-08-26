@@ -1,4 +1,5 @@
 import sys, os
+import markdown
 
 def argsIsError(args):
     """
@@ -32,12 +33,28 @@ def argsIsError(args):
     return 
 
 def convertMarkdownToHTML(args) :
-    pass
+    """
+    引数で受け取ったmarkdownファイルをHTMLファイルに変換する関数
+    """
+    inputFilePath = args[2]
+    outputFilePath = args[3]
+
+    outputHTML = ""
+
+    # inputファイルをHTMLにコンバートする
+    with open(inputFilePath) as f:
+        md = f.read()
+        outputHTML = markdown.markdown(md, extensions=['extra', 'sane_lists'])
+
+    # コンバートしたファイルを書き出す
+    with open(outputFilePath, "w") as f:
+        f.write(outputHTML)
 
 if __name__ == "__main__":
     # 引数のエラーチェック
     argsIsError(sys.argv)
 
+    # マークダウンをHTMLにコンバート
     convertMarkdownToHTML(sys.argv)
 
 
